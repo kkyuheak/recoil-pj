@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { useSetRecoilState } from "recoil";
-import { todoState } from "./atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { categoryState, todoState } from "./atoms";
 
 interface FormValues {
   todos: string;
@@ -8,6 +8,7 @@ interface FormValues {
 
 const CreateTodo = () => {
   const setTodos = useSetRecoilState(todoState);
+  const category = useRecoilValue(categoryState);
 
   const {
     register,
@@ -18,7 +19,7 @@ const CreateTodo = () => {
 
   const onSubmit = ({ todos }: FormValues) => {
     setTodos((oldValues) => [
-      { text: todos, id: Date.now(), category: "TO_DO" },
+      { text: todos, id: Date.now(), category },
       ...oldValues,
     ]);
 

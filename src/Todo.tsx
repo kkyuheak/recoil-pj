@@ -1,34 +1,35 @@
 import { useSetRecoilState } from "recoil";
 import { ITodo, todoState } from "./atoms";
 
-const Todo = ({ text, category }: ITodo) => {
+const Todo = ({ text, category, id }: ITodo) => {
   const setTodo = useSetRecoilState(todoState);
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const {
-      currentTarget: { name },
-    } = e;
+  const onClick = (newCategory: ITodo["category"]) => {
+    setTodo((oldValue) => {
+      const targetIndex = oldValue.findIndex((v) => v.id === id);
+      console.log(targetIndex);
+      const newTodo = { text, id, category: newCategory };
+      return [
+        ...oldValue.slice(0, targetIndex),
+        newTodo,
+        ...oldValue.slice(targetIndex + 1),
+      ];
+    });
 
-    console.log(name);
+    console.log(category, id);
   };
 
   return (
     <li>
       <p>{text}</p>
       {category !== "TO_DO" && (
-        <button name="TO_DO" onClick={onClick}>
-          To Do
-        </button>
+        <button onClick={() => onClick("TO_DO")}>To Do</button>
       )}
       {category !== "DOING" && (
-        <button name="DOING" onClick={onClick}>
-          DOING
-        </button>
+        <button onClick={() => onClick("DOING")}>DOING</button>
       )}
       {category !== "DONE" && (
-        <button name="DONE" onClick={onClick}>
-          DONE
-        </button>
+        <button onClick={() => onClick("DONE")}>DONE</button>
       )}
     </li>
   );
