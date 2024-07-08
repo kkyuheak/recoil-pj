@@ -11,6 +11,7 @@ const TodoList = () => {
     setCategory(+e.currentTarget.value as any);
   };
   console.log(toDos);
+
   return (
     <div>
       <CreateTodo />
@@ -46,7 +47,7 @@ const TodoList = () => {
           <option value={categories.DONE}>Done</option>
         </select>
       </form>
-      {toDos.map((item) => (
+      {toDos?.map((item) => (
         <Todo {...item} key={item.id} />
       ))}
     </div>

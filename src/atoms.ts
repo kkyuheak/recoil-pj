@@ -12,9 +12,12 @@ export interface ITodo {
   category: categories;
 }
 
+const getDefaultItem = localStorage.getItem("todos");
+const defaultItem = JSON.parse(getDefaultItem as any);
+
 export const todoState = atom<ITodo[]>({
   key: "todos",
-  default: [],
+  default: defaultItem || [],
 });
 
 export const categoryState = atom<categories>({
