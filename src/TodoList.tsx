@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import CreateTodo from "./CreateTodo";
-import { categoryState, todoSelectors } from "./atoms";
+import { categories, categoryState, todoSelectors } from "./atoms";
 import Todo from "./Todo";
 
 const TodoList = () => {
@@ -8,9 +8,9 @@ const TodoList = () => {
   const toDos = useRecoilValue(todoSelectors);
   const [category, setCategory] = useRecoilState(categoryState);
   const handleInput = (e: React.FormEvent<HTMLSelectElement>) => {
-    setCategory(e.currentTarget.value as any);
+    setCategory(+e.currentTarget.value as any);
   };
-  console.log(category);
+  console.log(toDos);
   return (
     <div>
       <CreateTodo />
@@ -38,12 +38,12 @@ const TodoList = () => {
       <hr /> */}
 
       <form>
-        <select onInput={handleInput}>
-          <option value="TO_DO" style={{ color: "red" }}>
+        <select value={category} onInput={handleInput}>
+          <option value={categories.TO_DO} style={{ color: "red" }}>
             To Do
           </option>
-          <option value="DOING">Doing</option>
-          <option value="DONE">Done</option>
+          <option value={categories.DOING}>Doing</option>
+          <option value={categories.DONE}>Done</option>
         </select>
       </form>
       {toDos.map((item) => (
