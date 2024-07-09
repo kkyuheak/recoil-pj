@@ -13,7 +13,7 @@ export interface ITodo {
 }
 
 const getDefaultItem = localStorage.getItem("todos");
-const defaultItem = JSON.parse(getDefaultItem as any);
+const defaultItem: ITodo[] = JSON.parse(getDefaultItem!);
 
 export const todoState = atom<ITodo[]>({
   key: "todos",
@@ -31,5 +31,23 @@ export const todoSelectors = selector({
     const todos = get(todoState);
     const category = get(categoryState);
     return todos.filter((item) => item.category === category);
+  },
+});
+
+export const timeState = atom({
+  key: "timeState",
+  default: 0,
+});
+
+export const hourSelector = selector<number>({
+  key: "hours",
+  get: ({ get }) => {
+    const time = get(timeState);
+    return time / 60;
+  },
+  set: ({ set }, newValue) => {
+    const minutes = +newValue * 60;
+    console.log(newValue);
+    set(timeState, minutes);
   },
 });

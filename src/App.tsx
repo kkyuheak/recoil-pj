@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import TodoList from "./TodoList";
+import Time from "./selector/Time";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <TodoList />,
+  },
+  {
+    path: "/selectors",
+    element: <Time />,
   },
 ]);
 
